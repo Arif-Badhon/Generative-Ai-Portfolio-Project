@@ -1,0 +1,27 @@
+[project]
+name = "generative-ai-portfolio-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.119.1",
+    "langchain>=1.0.2",
+    "langchain-community>=0.4",
+    "langchain-ollama>=1.0.0",
+    "langchain-text-splitters>=1.0.0",
+    "pypdf>=6.1.3",
+    "python-docx>=1.2.0",
+    "python-multipart>=0.0.20",
+    "qdrant-client>=1.15.1",
+    "sentence-transformers>=5.1.2",
+    "unstructured>=0.18.15",
+    "uvicorn>=0.38.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.9.0",
+    "pytest>=8.4.2",
+    "ruff>=0.14.1",
+]
