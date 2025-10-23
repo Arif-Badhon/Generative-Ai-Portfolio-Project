@@ -1,228 +1,221 @@
-RAG Portfolio Project
+# RAG Portfolio Project
+
 A state-of-the-art Retrieval-Augmented Generation (RAG) system leveraging modern generative AI and vector search technologies. This project demonstrates how to build a production-grade system that enables advanced question answering, document search, and contextual generation on your own infrastructure—private, scalable, and fast.
 
-Table of Contents
-Project Overview
+---
 
-Features
+## Table of Contents
+- Project Overview
+- Features
+- Tech Stack
+- Getting Started
+- Architecture
+- API Endpoints
+- Usage Examples
+- Testing
+- Project Structure
+- Troubleshooting
+- Contributing
+- License
 
-Tech Stack
+---
 
-Getting Started
-
-Architecture
-
-API Endpoints
-
-Usage Examples
-
-Testing
-
-Project Structure
-
-Troubleshooting
-
-Contributing
-
-License
-
-Project Overview
+## Project Overview
 This project showcases how to combine large language models (LLMs), local vector databases, and a modern Python web API for secure, high-performance knowledge and document retrieval. All LLM operations run locally—no data leaves your machine.
-It is ideal for applications in internal research, enterprise QA, knowledge management, or compliance-sensitive AI tasks.
 
-Features
-Local LLM Inference: Runs entirely on your machine using Ollama and open-source models (e.g., Llama 3.1).
+Ideal for applications in internal research, enterprise QA, knowledge management, or compliance-sensitive AI tasks.
 
-Vector Database Search: Uses Qdrant for fast, scalable semantic retrieval.
+---
 
-Flexible Document Ingestion: Upload PDF, DOCX, or TXT files for indexing and search.
+## Features
+- **Local LLM Inference:** Runs entirely on your machine using Ollama and open-source models (e.g., Llama 3.1).
+- **Vector Database Search:** Uses Qdrant for fast, scalable semantic retrieval.
+- **Flexible Document Ingestion:** Upload PDF, DOCX, or TXT files for indexing and search.
+- **FastAPI Back End:** High-concurrency, type-safe REST API with automatic documentation.
+- **Modern Python Package Management:** Built with `uv` for blazing-fast dependency resolution.
+- **Modular, Extensible Codebase:** Clean architecture, easy to extend and maintain.
+- **Privacy and Security:** No cloud calls—ideal for regulated sectors.
+- **Fully Containerizable:** Easily deploy with Docker.
 
-FastAPI Back End: High-concurrency, type-safe REST API with automatic docs.
+---
 
-Modern Python Package Management: Built with uv for blazing-fast dependency resolution.
+## Tech Stack
+- **LLM:** Ollama (local inference engine), Llama 3.1
+- **Vector DB:** Qdrant
+- **Embeddings:** Sentence Transformers
+- **API:** FastAPI + Uvicorn
+- **Package Manager:** uv
+- **Code Editor:** Cursor (recommended)
+- **Testing & Quality:** Pytest, Black, Ruff
+- **DevOps:** Docker-ready
 
-Modular, Extensible Codebase: Clean architecture, easy to extend/maintain.
+---
 
-Privacy and Security: No cloud calls—ideal for regulated sectors.
+## Getting Started
 
-Fully Containerizable: Easily deploy with Docker.
+### 1. Prerequisites
+- Python 3.10+
+- `uv` package manager
+- Ollama installed locally
+- Qdrant (Docker recommended)
 
-Tech Stack
-LLM: Ollama (local inference engine), Llama 3.1
-
-Vector DB: Qdrant
-
-Embeddings: Sentence Transformers
-
-API: FastAPI + Uvicorn
-
-Package Manager: uv
-
-Code Editor: Cursor (recommended)
-
-Testing & Quality: Pytest, Black, Ruff
-
-DevOps: Docker-ready
-
-Getting Started
-1. Prerequisites
-Python 3.10+
-
-uv package manager
-
-Ollama installed locally
-
-Qdrant (Docker recommended)
-
-2. Setup
-
-# Clone the repository
+### 2. Setup
 git clone https://github.com/YOUR_USERNAME/rag-portfolio-project.git
 cd rag-portfolio-project
-
-# Install dependencies
 uv sync
-
-# Copy and configure environment variables
 cp .env.example .env
-# (Update .env if needed)
 
+(Update .env if needed)
 
-3. Start Qdrant (Vector DB)
+### 3. Start Qdrant (Vector DB)
 
 docker run -p 6333:6333 qdrant/qdrant
 
-4. Pull Ollama LLM Model
+text
 
+### 4. Pull Ollama LLM Model
 ollama pull llama3.1
 
+text
 
-5. Run the FastAPI Application
-
+### 5. Run the FastAPI Application
 uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
-6. Open API Documentation
-Access interactive docs at:
-http://localhost:8000/docs
+text
 
+### 6. Open API Documentation
+Access at: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-Architecture
+---
 
-                ┌────────────┐
-                │   User     │
-                └─────┬──────┘
-                      │
-               ┌──────▼───────┐
-               │ FastAPI REST │
-               │   Backend    │
-               └─────┬────────┘
-         ┌────────────┴────────────┐
-         │                        │
- ┌───────▼─────┐        ┌─────────▼────────┐
- │ Document    │        │ Query, RAG Chain │
- │ Ingestion   │        │   & Generation   │
- └───────┬─────┘        └──────────────────┘
-         │
- ┌───────▼────────┐
- │ Embedding      │
- │ Generation     │
- └───────┬────────┘
-         │
- ┌───────▼─────────┐
- │ Qdrant Vector   │
- │ Database (DB)   │
- └───────┬─────────┘
-         │
- ┌───────▼─────────┐
- │ Ollama LLM      │
- └─────────────────┘
+## Architecture
+text
+        ┌────────────┐
+        │   User     │
+        └─────┬──────┘
+              │
+       ┌──────▼───────┐
+       │ FastAPI REST │
+       │   Backend    │
+       └─────┬────────┘
+ ┌────────────┴────────────┐
+ │                        │
+┌───▼─────┐ ┌───────▼────────┐
+│ Document │ │ Query, RAG │
+│ Ingestion│ │ Chain & Gen. │
+└───┬──────┘ └────────────────┘
+│
+┌───▼────────┐
+│ Embedding │
+│ Generation │
+└───┬────────┘
+│
+┌───▼─────────┐
+│ Qdrant │
+│ Vector DB │
+└───┬─────────┘
+│
+┌───▼─────────┐
+│ Ollama LLM │
+└─────────────┘
 
-Document Ingestion: Split files into semantic chunks and index as vectors.
+text
 
-Embedding Generation: Semantic vectors via Sentence Transformers.
+**Workflow:**
+- Documents are split into semantic chunks and indexed as vectors.
+- Sentence Transformers generate embeddings.
+- Qdrant retrieves the most relevant contexts.
+- Ollama answers using retrieved context (true RAG).
 
-Vector Search: Qdrant returns most relevant contexts for input queries.
+---
 
-Generative Augmentation: Ollama answers using retrieved context (true RAG).
+## API Endpoints
+| Method | Path           | Description                       |
+|--------|----------------|-----------------------------------|
+| GET    | `/`            | Root endpoint                     |
+| GET    | `/health`      | Check system status               |
+| POST   | `/ingest/file` | Upload and index document         |
+| POST   | `/query`       | Query system for answer           |
+| DELETE | `/reset`       | Reset vector database (danger!)   |
 
-API Endpoints
+Docs available at [http://localhost:8000/docs](http://localhost:8000/docs)
 
-Method  |  Path          |  Description                    
---------+----------------+---------------------------------
-GET     |  /             |  Root endpoint                  
-GET     |  /health       |  Check system status            
-POST    |  /ingest/file  |  Upload and index document      
-POST    |  /query        |  Query system for answer        
-DELETE  |  /reset        |  Reset vector database (danger!)
+---
 
-Automated docs: http://localhost:8000/docs
+## Usage Examples
+1. Upload a Document (.pdf/.docx/.txt)
+curl -X POST "http://localhost:8000/ingest/file"
+-H "accept: application/json"
+-F "file=@your_document.pdf"
 
-Usage Examples
-1. Upload a Document (.pdf/.docx/.txt):
-curl -X POST "http://localhost:8000/ingest/file" \
-     -H "accept: application/json" \
-     -F "file=@your_document.pdf"
+2. Query the System
+curl -X POST "http://localhost:8000/query"
+-H "Content-Type: application/json"
+-d '{"question": "What is the key insight in the uploaded document?", "top_k": 5}'
 
-2. Query the System:
-curl -X POST "http://localhost:8000/query" \
-     -H "Content-Type: application/json" \
-     -d '{"question": "What is the key insight in the uploaded document?", "top_k": 5}'
-
-3. Reset Collection:
+3. Reset Collection
 curl -X DELETE "http://localhost:8000/reset"
 
+text
 
-Testing
-Unit tests provided in /tests using Pytest.
+---
 
-Run all tests:
+## Testing
+- Unit tests in `/tests` using Pytest.
+- Run all tests:
 uv run pytest
 
-Ensure code quality:
+text
+- Ensure formatting and linting:
 uv run black app/ tests/
 uv run ruff app/ tests/
 
+text
 
-Project Structure
+---
+
+## Project Structure
 rag-portfolio-project/
-├── .env                          # Environment config
-├── pyproject.toml                # Dependencies config
-├── README.md                     # This documentation
+├── .env
+├── pyproject.toml
+├── README.md
 ├── app/
-│   ├── main.py                   # FastAPI app
-│   ├── config.py                 # Config loader
-│   ├── models/                   # Pydantic schemas
-│   ├── core/                     # LLM, embeddings, vector DB
-│   ├── services/                 # Document ingestion, RAG chain
-│   └── api/                      # API routes and dependencies
+│ ├── main.py
+│ ├── config.py
+│ ├── models/
+│ ├── core/
+│ ├── services/
+│ └── api/
 ├── data/
-│   ├── documents/                # Raw document storage
-│   └── processed/                # Chunked files
+│ ├── documents/
+│ └── processed/
 ├── tests/
-│   └── test_rag.py               # Unit tests
+│ └── test_rag.py
 └── scripts/
-    ├── setup_qdrant.py           # DB utils
-    └── ingest_documents.py       # Bulk ingest
+├── setup_qdrant.py
+└── ingest_documents.py
 
+text
 
-Troubleshooting
-Missing Modules?
-Run uv add <module-name> for any missing Python packages.
+---
 
-Ollama Model Not Found?
-Double-check model name with ollama list and update .env.
+## Troubleshooting
+- **Missing Modules?** Run `uv add <module-name>`
+- **Ollama Model Not Found?** Check with `ollama list` or update `.env`
+- **Qdrant Not Running?** Ensure the Docker container is up (`docker ps`)
+- **File Upload Errors?** Install `python-multipart`
 
-Qdrant Not Running?
-Ensure container is up (docker ps).
+---
 
-File Upload Errors?
-Check you have python-multipart installed.
+## Contributing
+Contributions are welcome! Fork the repo, open issues, or submit pull requests for enhancements or bug fixes.
 
-Contributing
-Contributions are welcome! Please fork the repository, open issues, or submit pull requests for bug fixes, docs improvements, or new features.
+---
 
-License
+## License
 Open-source under the MIT License.
 
-Questions?
+---
+
+## Questions?
 Contact the repository owner or open an issue – happy to help!
