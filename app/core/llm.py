@@ -41,3 +41,18 @@ Answer:""",
             "question": question,
             "context": context
         })
+
+async def generate_stream(self, question: str, context: str):
+    """Stream LLM responses"""
+    async for chunk in self.chain.astream({
+        "question": question,
+        "context": context
+    }):
+        yield chunk
+
+from langchain.memory import ConversationBufferMemory
+
+class ConversationalRAG:
+    def __init__(self, rag_chain):
+        self.rag_chain = rag_chain
+        self.memory = ConversationBufferMemory()
