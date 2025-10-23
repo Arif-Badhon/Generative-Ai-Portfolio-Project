@@ -60,6 +60,7 @@ Ideal for applications in internal research, enterprise QA, knowledge management
 - Qdrant (Docker recommended)
 
 ### 2. Setup
+first fork my repository
 git clone https://github.com/YOUR_USERNAME/rag-portfolio-project.git
 cd rag-portfolio-project
 uv sync
