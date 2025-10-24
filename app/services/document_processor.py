@@ -4,7 +4,6 @@ import pypdf
 from docx import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-
 class DocumentProcessor:
     def __init__(self, chunk_size: int = 500, chunk_overlap: int = 50):
         self.text_splitter = RecursiveCharacterTextSplitter(

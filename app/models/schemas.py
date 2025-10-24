@@ -1,10 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
-class DocumentUpload(BaseModel):
-    filename: str
-    content: str
-
 class QueryRequest(BaseModel):
     question: str
     top_k: Optional[int] = 5

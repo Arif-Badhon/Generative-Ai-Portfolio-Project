@@ -1,0 +1,11 @@
+Machine Learning Fundamentals
+
+Supervised Learning: Training models with labeled data. Examples include classification and regression tasks.
+
+Unsupervised Learning: Finding patterns in unlabeled data. Clustering and dimensionality reduction are common techniques.
+
+Reinforcement Learning: Learning through trial and error with rewards and penalties. Used in robotics and game playing.
+
+Feature Engineering: The process of selecting and transforming variables to improve model performance.
+
+Model Evaluation: Using metrics like accuracy, precision, recall, and F1-score to assess model quality.

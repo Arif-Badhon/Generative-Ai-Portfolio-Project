@@ -1,0 +1,16 @@
+Retrieval-Augmented Generation (RAG) System
+
+RAG combines retrieval and generation to create more accurate AI responses. 
+
+The process works in three steps:
+1. Document Ingestion: Documents are split into chunks and converted to vector embeddings
+2. Retrieval: When a query comes in, relevant chunks are found using similarity search
+3. Generation: The LLM uses retrieved context to generate accurate, grounded answers
+
+Benefits of RAG:
+- Reduces hallucinations by grounding responses in actual documents
+- Enables knowledge updates without retraining models
+- Provides source citations for transparency
+- Works with private, domain-specific data
+
+RAG is ideal for enterprise knowledge bases, customer support, and research applications.

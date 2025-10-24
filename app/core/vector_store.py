@@ -12,17 +12,20 @@ class VectorStore:
     
     def _ensure_collection(self):
         """Create collection if it doesn't exist"""
-        collections = self.client.get_collections().collections
-        collection_names = [col.name for col in collections]
-        
-        if self.collection_name not in collection_names:
-            self.client.create_collection(
-                collection_name=self.collection_name,
-                vectors_config=VectorParams(
-                    size=self.vector_size,
-                    distance=Distance.COSINE
+        try:
+            collections = self.client.get_collections().collections
+            collection_names = [col.name for col in collections]
+            
+            if self.collection_name not in collection_names:
+                self.client.create_collection(
+                    collection_name=self.collection_name,
+                    vectors_config=VectorParams(
+                        size=self.vector_size,
+                        distance=Distance.COSINE
+                    )
                 )
-            )
+        except Exception as e:
+            print(f"Warning: Could not connect to Qdrant: {e}")
     
     def add_documents(self, texts: List[str], embeddings: List[List[float]], 
                      metadata: List[Dict] = None):
@@ -50,10 +53,14 @@ class VectorStore:
     def search(self, query_embedding: List[float], limit: int = 5, 
               score_threshold: float = 0.7):
         """Search for similar documents"""
-        results = self.client.search(
-            collection_name=self.collection_name,
-            query_vector=query_embedding,
-            limit=limit,
-            score_threshold=score_threshold
-        )
-        return results
+        try:
+            results = self.client.search(
+                collection_name=self.collection_name,
+                query_vector=query_embedding,
+                limit=limit,
+                score_threshold=score_threshold
+            )
+            return results
+        except Exception as e:
+            print(f"Search error: {e}")
+            return []
