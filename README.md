@@ -1,3 +1,16 @@
+---
+title: "Generative AI Portfolio Project"
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: docker
+sdk_version: "0.0.0"           # (or blank, Spaces fills this)
+app_file: app.py
+pinned: false
+---
+
+
+
 # RAG Portfolio Project
 
 A state-of-the-art Retrieval-Augmented Generation (RAG) system leveraging modern generative AI and vector search technologies. This project demonstrates how to build a production-grade system that enables advanced question answering, document search, and contextual generation on your own infrastructure—private, scalable, and fast.
