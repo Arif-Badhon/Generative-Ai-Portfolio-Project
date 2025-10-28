@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RAG Portfolio Project Q&A</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { margin:0; font-family:system-ui,sans-serif; background: #f6f8fc; }
+        .container { max-width: 500px; margin:40px auto; background:#fff; border-radius:18px; padding:36px 28px 30px 28px; box-shadow:0 8px 36px #0001;}
+        h1 { color:#466bb7; font-size:2rem; margin-bottom: 8px;}
+        .subtitle { color: #686868; margin-bottom:20px; font-size:1.05rem;}
+        textarea { width:100%; min-height:70px; font-size:1rem; border-radius:7px; border:1.5px solid #dbeafe; padding:10px;}
+        button { margin:10px 0 0 0; padding:12px 24px; border:none; border-radius:8px; background:#466bb7; color:#fff; font-size:1.08em; font-weight:500; cursor:pointer;}
+        #answer { background:#f3f4fa; border-left:5px solid #466bb7; margin-top:24px; padding:19px; border-radius:8px 7px 7px 8px;}
+        .source { font-size:0.92em; color:#666; margin-top:7px; }
+        #loading { margin:20px 0; color: #466bb7; font-weight: bold;}
+        #error { color: #d00; margin: 12px 0;}
+        footer { margin:32px auto 0; max-width:500px; font-size:0.92em; text-align:center; color:#aaa; }
+        @media (max-width:600px) {.container {padding:18px 5vw 20px 5vw;} }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RAG Demo: Document Q&A</h1>
+        <div class="subtitle">Ask any question about your uploaded documents.</div>
+        <form id="form">
+            <textarea id="question" placeholder="E.g. What is deep learning?" required maxlength="300"></textarea>
+            <button type="submit">Ask AI</button>
+        </form>
+        <div id="loading" style="display:none;">Thinking...</div>
+        <div id="error"></div>
+        <div id="answer"></div>
+    </div>
+    <footer>
+    <b>Open-source RAG Portfolio Project</b> &nbsp;|&nbsp; <a href="https://github.com/YOUR_USERNAME/rag-portfolio-project" target="_blank">GitHub</a>
+    </footer>
+    <script>
+        // CHANGE THIS to your API endpoint (must be public, e.g., https://your-space-name.hf.space/query or deployed backend URL)
+        const API_URL = "/api/query";
+        const form = document.getElementById("form");
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            document.getElementById("error").textContent = "";
+            document.getElementById("answer").innerHTML = "";
+            document.getElementById("loading").style.display = "block";
+            const q = document.getElementById("question").value.trim();
+            if (!q) return;
+            let r, data;
+            try {
+                r = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({question: q, top_k: 5}),
+                });
+                data = await r.json();
+                document.getElementById("loading").style.display = "none";
+                if (!r.ok) throw new Error("Server error: " + (data?.detail || r.status));
+            } catch (err) {
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("error").textContent = "Error: " + (err.message || "backend unavailable");
+                return;
+            }
+            document.getElementById("answer").innerHTML =
+                `<b>Answer:</b><br>${data.answer || "No answer."}<br>` +
+                (data.sources && data.sources.length ? 
+                  data.sources.map((s,i)=>`<div class="source">Source ${i+1}: ${s.source} (chunk ${s.chunk_index}, relevance: ${Math.round(s.score*100)}%)</div>`).join('') : '');
+        };
+    </script>
+</body>
+</html>
